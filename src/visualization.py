@@ -6,22 +6,28 @@ class BatteryAgingVisualizer:
         fig = go.Figure()  
 
         # Voltage vs Cycle  
-        fig.add_trace(go.Scatter(  
-            x=cleaned_data['Cycle'],   
-            y=cleaned_data['Voltage_measured'],   
-            mode='lines',   
-            name='Voltage Measured'  
-        ))  
+        if 'Voltage_measured' in cleaned_data.columns:  
+            fig.add_trace(go.Scatter(  
+                x=cleaned_data['Cycle'],   
+                y=cleaned_data['Voltage_measured'],   
+                mode='lines',   
+                name='Voltage Measured'  
+            ))  
+        else:  
+            print("Warning: 'Voltage_measured' column is missing.")  
 
         # Current vs Cycle  
-        fig.add_trace(go.Scatter(  
-            x=cleaned_data['Cycle'],   
-            y=cleaned_data['Current_measured'],   
-            mode='lines',   
-            name='Current Measured'  
-        ))  
+        if 'Current_measured' in cleaned_data.columns:  
+            fig.add_trace(go.Scatter(  
+                x=cleaned_data['Cycle'],   
+                y=cleaned_data['Current_measured'],   
+                mode='lines',   
+                name='Current Measured'  
+            ))  
+        else:  
+            print("Warning: 'Current_measured' column is missing.")  
 
-        # Temperature vs Cycle if column exists  
+        # Temperature vs Cycle if the column exists  
         if 'Temperature' in cleaned_data.columns:  
             fig.add_trace(go.Scatter(  
                 x=cleaned_data['Cycle'],   
@@ -38,9 +44,10 @@ class BatteryAgingVisualizer:
                 mode='lines',   
                 name='Charge Transfer Resistance'  
             ))  
+        else:  
+            print("Warning: 'Rct' column is not available for plotting.")  
 
-        # Optionally add more traces based on available data...  
-
+        # Update layout  
         fig.update_layout(  
             title='Battery Aging Analysis',   
             xaxis_title='Cycle',   

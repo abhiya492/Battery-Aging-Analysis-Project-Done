@@ -1,3 +1,5 @@
+# main.py  
+
 import os  
 import sys  
 import plotly.io as pio  
@@ -24,10 +26,12 @@ def main():
     try:  
         # Combine all datasets  
         combined_data = data_loader.combine_datasets()  
+        print("Combined DataFrame columns:", combined_data.columns.tolist())  # Debugging line  
         
         # Preprocess data  
         preprocessor = BatteryDataPreprocessor()  
         cleaned_data = preprocessor.clean_data(combined_data)  
+        print("Cleaned DataFrame columns:", cleaned_data.columns.tolist())  # Debugging line  
         
         if cleaned_data is not None:  
             # Create visualizations  
